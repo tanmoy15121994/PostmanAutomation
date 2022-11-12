@@ -1,0 +1,19 @@
+version: 2.1
+orbs:
+  newman: postman/newman@0.0.2
+jobs:
+  build:
+    executor: newman/postman-newman-docker
+    steps:
+      - checkout
+      - run:
+          name: Install newman
+          command: npm install newman
+      - run:
+         name: Install dependencies
+         command: apk add --update ca-certificates openssl && update-ca-certificates
+      - run:
+          name: Run Google APIs tests with newman
+          command: |
+            newman run https://www.getpostman.com/collections/a8e3e7144c4651a9b483
+      
